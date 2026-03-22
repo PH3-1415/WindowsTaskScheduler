@@ -2,65 +2,42 @@ name: Build Windows EXE
 
 on:
   push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-  workflow_dispatch:  # 允许手动触发
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
+    - uses: actions/checkout@v4
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.12'
-        
+
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
         pip install pyinstaller
-        
+        pip install PySide6 APScheduler chardet python-dateutil
+
     - name: Build EXE
       run: |
-        pyinstaller --onefile --windowed --name=WindowsTaskScheduler --icon=icon.ico main.py
-        
-    - name: Upload EXE artifact
+        pyinstaller --onefile --windowed --name=WindowsTaskScheduler main.py
+
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: WindowsTaskScheduler-EXE
         path: dist/WindowsTaskScheduler.exe
-        
+
     - name: Create Release
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      if: success()
       uses: softprops/action-gh-release@v1
       with:
         files: dist/WindowsTaskScheduler.exe
         tag_name: v1.0.0-${{ github.run_number }}
         name: Windows Task Scheduler v1.0.0
-        body: |
-          Windows定时任务管理器
-          
-          ## 功能特点
-          - 免安装EXE，双击运行
-          - GUI窗口界面
-          - 任务列表管理
-          - 定时调度（每天/每周/每月/法定工作日）
-          - 串行任务执行
-          - 实时输出显示
-          - 默认脚本管理
-          - 字体编码支持
-          - 条件判断
-          - 历史记录查看
-          
-          ## 使用方法
-          1. 下载 WindowsTaskScheduler.exe
-          2. 双击运行即可
-          3. 无需安装Python或任何依赖
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

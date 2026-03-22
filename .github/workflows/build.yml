@@ -1,33 +1,22 @@
-name: Build EXE
+name: Build
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+on: [push, workflow_dispatch]
 
 jobs:
   build:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Setup Python
-      uses: actions/setup-python@v5
+    - uses: actions/checkout@v3
+    
+    - uses: actions/setup-python@v4
       with:
-        python-version: '3.12'
-
-    - name: Install dependencies
-      run: |
-        pip install pyinstaller
-        pip install PySide6 APScheduler chardet python-dateutil
-
-    - name: Build EXE
-      run: |
-        pyinstaller --onefile --windowed --name=WindowsTaskScheduler main.py
-
-    - name: Upload EXE
-      uses: actions/upload-artifact@v3
+        python-version: '3.11'
+    
+    - run: pip install pyinstaller PySide6 APScheduler chardet python-dateutil
+    
+    - run: pyinstaller --onefile --windowed --name=WindowsTaskScheduler main.py
+    
+    - uses: actions/upload-artifact@v3
       with:
-        name: WindowsTaskScheduler-EXE
+        name: EXE
         path: dist\WindowsTaskScheduler.exe
-        retention-days: 30

@@ -1,0 +1,4 @@
+# Windows Task Scheduler Icon
+# This is a placeholder. Replace with actual icon file before building.
+# Recommended size: 256x256, 128x128, 64x64, 32x32, 16x16
+# Format: ICO (Windows icon format)

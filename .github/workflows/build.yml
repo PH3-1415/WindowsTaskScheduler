@@ -1,4 +1,4 @@
-name: Build Windows EXE
+name: Build EXE
 
 on:
   push:
@@ -11,33 +11,29 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
+    - uses: actions/setup-python@v5
       with:
-        python-version: '3.12'
+        python-version: '3.11'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pyinstaller
-        pip install PySide6 APScheduler chardet python-dateutil
+    - name: Install PyInstaller
+      run: pip install pyinstaller
 
-    - name: Build EXE
-      run: |
-        pyinstaller --onefile --windowed --name=WindowsTaskScheduler main.py
+    - name: Install PySide6
+      run: pip install PySide6
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
+    - name: Install APScheduler
+      run: pip install APScheduler
+
+    - name: Install chardet
+      run: pip install chardet
+
+    - name: Install python-dateutil
+      run: pip install python-dateutil
+
+    - name: Build
+      run: pyinstaller --onefile --windowed main.py
+
+    - uses: actions/upload-artifact@v4
       with:
-        name: WindowsTaskScheduler-EXE
-        path: dist/WindowsTaskScheduler.exe
-
-    - name: Create Release
-      if: success()
-      uses: softprops/action-gh-release@v1
-      with:
-        files: dist/WindowsTaskScheduler.exe
-        tag_name: v1.0.0-${{ github.run_number }}
-        name: Windows Task Scheduler v1.0.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        name: EXE
+        path: dist/main.exe

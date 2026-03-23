@@ -1,6 +1,6 @@
-name: Build
+name: Build Debug
 
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 
 permissions:
   contents: read
@@ -19,24 +19,22 @@ jobs:
     - name: Install dependencies
       run: pip install pyinstaller PySide6 APScheduler chardet python-dateutil
     
-    - name: Build EXE with spec file
+    - name: Build Debug EXE (with console)
       run: |
         pyinstaller WindowsTaskScheduler.spec --noconfirm
       shell: cmd
     
-    - name: Test EXE (quick check)
+    - name: Rename to debug version
       run: |
-        echo "Testing EXE..."
-        dist\WindowsTaskScheduler.exe --help 2>&1 || echo "Exit code: $?"
+        move dist\WindowsTaskScheduler.exe dist\WindowsTaskScheduler-Debug.exe
       shell: cmd
-      continue-on-error: true
     
     - uses: actions/upload-artifact@v4
       with:
-        name: WindowsTaskScheduler-EXE
-        path: dist\WindowsTaskScheduler.exe
+        name: WindowsTaskScheduler-Debug-EXE
+        path: dist\WindowsTaskScheduler-Debug.exe
     
     - uses: actions/upload-artifact@v4
       with:
-        name: Build-Log
+        name: Build-Warnings
         path: build\WindowsTaskScheduler\warn*.txt

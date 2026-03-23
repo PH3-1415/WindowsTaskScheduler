@@ -16,9 +16,9 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QFont, QIcon
 
-from ..config import ConfigManager
-from ..utils.auto_start import AutoStartManager
-from .styles.colors import COLORS
+from config import ConfigManager
+from utils.auto_start import AutoStartManager
+from gui.styles.colors import COLORS
 
 
 class SettingsDialog(QDialog):

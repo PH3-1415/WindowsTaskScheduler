@@ -16,8 +16,8 @@ from PySide6.QtGui import (
     QAction, QIcon, QSyntaxHighlighter, QTextDocument
 )
 
-from .styles.colors import COLORS
-from ..utils.encoding_helper import EncodingHelper
+from gui.styles.colors import COLORS
+from utils.encoding_helper import EncodingHelper
 
 
 class OutputWidget(QWidget):

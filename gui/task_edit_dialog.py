@@ -16,8 +16,8 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, Signal, QTime
 from PySide6.QtGui import QFont, QIcon
 
-from ..database.models import Task
-from .styles.colors import COLORS
+from database.models import Task
+from gui.styles.colors import COLORS
 
 
 class TaskEditDialog(QDialog):

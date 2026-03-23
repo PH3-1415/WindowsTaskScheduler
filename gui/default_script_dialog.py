@@ -18,10 +18,10 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QFont, QIcon, QTextCursor, QColor
 
-from ..database.models import DefaultScript
-from ..database.db_manager import DatabaseManager
-from ..core.default_script import DefaultScriptManager
-from .styles.colors import COLORS
+from database.models import DefaultScript
+from database.db_manager import DatabaseManager
+from core.default_script import DefaultScriptManager
+from gui.styles.colors import COLORS
 
 
 class DefaultScriptDialog(QDialog):

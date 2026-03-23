@@ -12,9 +12,9 @@ from pathlib import Path
 from typing import Dict, List, Optional, Any, Union
 import sqlite3
 
-from ..database.models import Task, TaskLog, DefaultScript, AppConfig
-from ..database.db_manager import DatabaseManager
-from ..config import ConfigManager
+from database.models import Task, TaskLog, DefaultScript, AppConfig
+from database.db_manager import DatabaseManager
+from config import ConfigManager
 
 
 class DataManager:

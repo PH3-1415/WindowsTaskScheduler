@@ -12,11 +12,11 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, Signal, QTimer
 from PySide6.QtGui import QCloseEvent, QIcon
 
-from .task_list_widget import TaskListWidget
-from .output_widget import OutputWidget
-from ..config import ConfigManager
-from ..database.db_manager import DatabaseManager
-from ..core.scheduler import TaskScheduler
+from gui.task_list_widget import TaskListWidget
+from gui.output_widget import OutputWidget
+from config import ConfigManager
+from database.db_manager import DatabaseManager
+from core.scheduler import TaskScheduler
 
 
 class MainWindow(QMainWindow):
@@ -162,7 +162,7 @@ class MainWindow(QMainWindow):
     def _apply_styles(self):
         """应用样式"""
         try:
-            from .styles.colors import COLORS
+            from gui.styles.colors import COLORS
             
             # 设置窗口样式
             self.setStyleSheet(f"""
@@ -294,4 +294,109 @@ class MainWindow(QMainWindow):
             from database.models import Task
             
             # 创建任务对象
-<｜DSML｜parameter name="oldText" string="true">            task = Task.from_dict(task_data)
+            task = Task.from_dict(task_data)
+            
+            # 添加到数据库
+            task_id = self.db.add_task(task)
+            
+            # 添加到调度器
+            if self.scheduler:
+                self.scheduler.add_task(task)
+            
+            # 刷新UI
+            self._load_tasks_to_ui()
+            
+            logging.info(f"任务添加成功: {task.name}")
+            
+        except Exception as e:
+            logging.error(f"添加任务失败: {e}")
+            QMessageBox.critical(self, "错误", f"添加任务失败:\\n\\n{str(e)}")
+    
+    def _on_task_edited(self, task_data: dict):
+        """处理任务编辑"""
+        try:
+            from database.models import Task
+            
+            # 创建任务对象
+            task = Task.from_dict(task_data)
+            
+            # 更新数据库
+            self.db.update_task(task)
+            
+            # 更新调度器
+            if self.scheduler:
+                self.scheduler.update_task(task)
+            
+            # 刷新UI
+            self._load_tasks_to_ui()
+            
+            logging.info(f"任务更新成功: {task.name}")
+            
+        except Exception as e:
+            logging.error(f"更新任务失败: {e}")
+            QMessageBox.critical(self, "错误", f"更新任务失败:\\n\\n{str(e)}")
+    
+    def _on_task_deleted(self, task_id: int):
+        """处理任务删除"""
+        try:
+            # 从数据库删除
+            self.db.delete_task(task_id)
+            
+            # 从调度器删除
+            if self.scheduler:
+                self.scheduler.remove_task(task_id)
+            
+            # 刷新UI
+            self._load_tasks_to_ui()
+            
+            logging.info(f"任务删除成功: ID={task_id}")
+            
+        except Exception as e:
+            logging.error(f"删除任务失败: {e}")
+            QMessageBox.critical(self, "错误", f"删除任务失败:\\n\\n{str(e)}")
+    
+    def _on_task_run_now(self, task_id: int):
+        """处理立即运行任务"""
+        try:
+            if self.scheduler:
+                self.scheduler.run_task_now(task_id)
+                logging.info(f"任务立即执行: ID={task_id}")
+        except Exception as e:
+            logging.error(f"立即执行任务失败: {e}")
+            QMessageBox.critical(self, "错误", f"立即执行任务失败:\\n\\n{str(e)}")
+    
+    def _on_task_paused(self, task_id: int):
+        """处理任务暂停"""
+        try:
+            if self.scheduler:
+                self.scheduler.pause_task(task_id)
+                self.task_list_widget.update_task_status(task_id, 'paused')
+                logging.info(f"任务暂停: ID={task_id}")
+        except Exception as e:
+            logging.error(f"暂停任务失败: {e}")
+    
+    def _on_task_resumed(self, task_id: int):
+        """处理任务恢复"""
+        try:
+            if self.scheduler:
+                self.scheduler.resume_task(task_id)
+                self.task_list_widget.update_task_status(task_id, 'enabled')
+                logging.info(f"任务恢复: ID={task_id}")
+        except Exception as e:
+            logging.error(f"恢复任务失败: {e}")
+    
+    def _on_output_cleared(self):
+        """处理输出清除"""
+        logging.info("输出已清除")
+    
+    def closeEvent(self, event):
+        """关闭事件"""
+        # 停止调度器
+        if self.scheduler:
+            self.scheduler.stop()
+        
+        # 关闭数据库
+        if self.db:
+            self.db.close()
+        
+        event.accept()

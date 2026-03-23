@@ -18,7 +18,7 @@ from PySide6.QtGui import QFont
 
 from app import TaskSchedulerApp
 from config import ConfigManager
-from utils.logger import setup_logger
+from utils.logger import get_logger
 
 
 def setup_high_dpi():
@@ -37,7 +37,7 @@ def handle_exception(exc_type, exc_value, exc_traceback):
         sys.__excepthook__(exc_type, exc_value, exc_traceback)
         return
     
-    logger = setup_logger()
+    logger = get_logger(__name__)
     logger.error("未捕获的异常:", exc_info=(exc_type, exc_value, exc_traceback))
     
     # 显示错误对话框
@@ -119,7 +119,7 @@ def main():
         
     except Exception as e:
         # 启动失败
-        logger = setup_logger()
+        logger = get_logger(__name__)
         logger.error("程序启动失败:", exc_info=True)
         
         from PySide6.QtWidgets import QMessageBox

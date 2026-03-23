@@ -13,9 +13,9 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, Signal, QTimer
 from PySide6.QtGui import QFont, QIcon, QAction, QColor
 
-from ..database.models import Task
-from ..database.db_manager import DatabaseManager
-from .styles.colors import COLORS
+from database.models import Task
+from database.db_manager import DatabaseManager
+from gui.styles.colors import COLORS
 
 
 class TaskListWidget(QWidget):
@@ -271,7 +271,7 @@ class TaskListWidget(QWidget):
     # ========== 按钮事件处理 ==========    
     def _on_add_task(self):
         """添加任务"""
-        from .task_edit_dialog import TaskEditDialog
+        from gui.task_edit_dialog import TaskEditDialog
         
         dialog = TaskEditDialog(self)
         if dialog.exec():
@@ -290,7 +290,7 @@ class TaskListWidget(QWidget):
         if not task:
             return
         
-        from .task_edit_dialog import TaskEditDialog
+        from gui.task_edit_dialog import TaskEditDialog
         
         dialog = TaskEditDialog(self, task)
         if dialog.exec():

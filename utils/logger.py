@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 from typing import Optional, Dict, Any
 from pathlib import Path
 
-from ..config import ConfigManager
+from config import ConfigManager
 
 
 class LogManager:

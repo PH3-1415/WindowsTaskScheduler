@@ -9,7 +9,7 @@ from PySide6.QtWidgets import QSystemTrayIcon, QMenu, QApplication
 from PySide6.QtCore import Qt, Signal, QTimer
 from PySide6.QtGui import QIcon, QAction, QPixmap, QPainter, QColor
 
-from .styles.colors import COLORS
+from gui.styles.colors import COLORS
 
 
 class SystemTray(QSystemTrayIcon):

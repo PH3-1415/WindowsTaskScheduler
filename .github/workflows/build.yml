@@ -20,7 +20,38 @@ jobs:
       run: pip install pyinstaller PySide6 APScheduler chardet python-dateutil
     
     - name: Build EXE
-      run: pyinstaller --onefile --windowed --name=WindowsTaskScheduler main.py
+      run: |
+        pyinstaller --onefile --windowed --name=WindowsTaskScheduler ^
+          --hidden-import=gui ^
+          --hidden-import=gui.main_window ^
+          --hidden-import=gui.task_list_widget ^
+          --hidden-import=gui.output_widget ^
+          --hidden-import=gui.system_tray ^
+          --hidden-import=gui.task_edit_dialog ^
+          --hidden-import=gui.settings_dialog ^
+          --hidden-import=gui.default_script_dialog ^
+          --hidden-import=gui.styles ^
+          --hidden-import=gui.styles.colors ^
+          --hidden-import=core ^
+          --hidden-import=core.scheduler ^
+          --hidden-import=core.task_executor ^
+          --hidden-import=core.condition_evaluator ^
+          --hidden-import=core.default_script ^
+          --hidden-import=database ^
+          --hidden-import=database.db_manager ^
+          --hidden-import=database.models ^
+          --hidden-import=utils ^
+          --hidden-import=utils.logger ^
+          --hidden-import=utils.auto_start ^
+          --hidden-import=utils.data_manager ^
+          --hidden-import=utils.date_utils ^
+          --hidden-import=utils.emoji_handler ^
+          --hidden-import=utils.encoding_helper ^
+          --hidden-import=resources ^
+          --hidden-import=tools ^
+          --collect-all PySide6 ^
+          main.py
+      shell: cmd
     
     - uses: actions/upload-artifact@v4
       with:

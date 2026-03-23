@@ -34,7 +34,7 @@ ENV/
 
 # PyInstaller
 *.manifest
-*.spec
+# *.spec  # 注释掉，我们需要提交 spec 文件
 build/
 dist/exe/
 

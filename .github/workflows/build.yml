@@ -22,6 +22,8 @@ jobs:
     - name: Build EXE
       run: |
         pyinstaller --onefile --windowed --name=WindowsTaskScheduler ^
+          --hidden-import=app ^
+          --hidden-import=config ^
           --hidden-import=gui ^
           --hidden-import=gui.main_window ^
           --hidden-import=gui.task_list_widget ^

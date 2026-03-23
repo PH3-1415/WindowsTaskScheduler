@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any
 from pathlib import Path
 
-from .models import Task, TaskLog, DefaultScript, AppConfig
+from database.models import Task, TaskLog, DefaultScript, AppConfig
 
 
 class DatabaseManager:

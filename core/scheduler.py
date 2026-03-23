@@ -17,8 +17,8 @@ from apscheduler.executors.pool import ThreadPoolExecutor
 
 from database.models import Task
 from database.db_manager import DatabaseManager
-from .task_executor import TaskExecutor
-from .condition_evaluator import ConditionEvaluator
+from core.task_executor import TaskExecutor
+from core.condition_evaluator import ConditionEvaluator
 
 
 class TaskScheduler:

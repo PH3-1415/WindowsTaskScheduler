@@ -64,10 +64,10 @@ class MainWindow(QMainWindow):
     def _setup_icon(self):
         """设置图标"""
         try:
-            icon_path = "resources/icons/app.ico"
-            icon = QIcon(icon_path)
+            from utils.icon_helper import get_app_icon
+            icon = get_app_icon()
             self.setWindowIcon(icon)
-        except:
+        except Exception:
             pass
     
     def _init_ui(self):

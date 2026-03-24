@@ -18,6 +18,7 @@ from PySide6.QtGui import (
 
 from gui.styles.colors import COLORS
 from utils.encoding_helper import EncodingHelper
+from utils.icon_helper import get_icon
 
 
 class OutputWidget(QWidget):
@@ -64,7 +65,7 @@ class OutputWidget(QWidget):
         
         # 清空按钮
         self.clear_button = QPushButton("清空")
-        self.clear_button.setIcon(QIcon("resources/icons/clear.png"))
+        self.clear_button.setIcon(get_icon('clear'))
         self.clear_button.clicked.connect(self.clear)
         
         # 自动滚动复选框

@@ -16,6 +16,7 @@ from PySide6.QtGui import QFont, QIcon, QAction, QColor
 from database.models import Task
 from database.db_manager import DatabaseManager
 from gui.styles.colors import COLORS
+from utils.icon_helper import get_icon
 
 
 class TaskListWidget(QWidget):
@@ -65,30 +66,30 @@ class TaskListWidget(QWidget):
         
         # 添加任务按钮
         self.add_button = QPushButton("添加任务")
-        self.add_button.setIcon(QIcon("resources/icons/add.png"))
+        self.add_button.setIcon(get_icon('add'))
         self.add_button.clicked.connect(self._on_add_task)
         
         # 编辑按钮
         self.edit_button = QPushButton("编辑")
-        self.edit_button.setIcon(QIcon("resources/icons/edit.png"))
+        self.edit_button.setIcon(get_icon('edit'))
         self.edit_button.clicked.connect(self._on_edit_task)
         self.edit_button.setEnabled(False)
         
         # 删除按钮
         self.delete_button = QPushButton("删除")
-        self.delete_button.setIcon(QIcon("resources/icons/delete.png"))
+        self.delete_button.setIcon(get_icon('delete'))
         self.delete_button.clicked.connect(self._on_delete_task)
         self.delete_button.setEnabled(False)
         
         # 运行按钮
         self.run_button = QPushButton("立即运行")
-        self.run_button.setIcon(QIcon("resources/icons/play.png"))
+        self.run_button.setIcon(get_icon('play'))
         self.run_button.clicked.connect(self._on_run_task_now)
         self.run_button.setEnabled(False)
         
         # 暂停/恢复按钮
         self.pause_button = QPushButton("暂停")
-        self.pause_button.setIcon(QIcon("resources/icons/pause.png"))
+        self.pause_button.setIcon(get_icon('pause'))
         self.pause_button.clicked.connect(self._on_pause_task)
         self.pause_button.setEnabled(False)
         
@@ -213,10 +214,10 @@ class TaskListWidget(QWidget):
             if task:
                 if task.enabled:
                     self.pause_button.setText("暂停")
-                    self.pause_button.setIcon(QIcon("resources/icons/pause.png"))
+                    self.pause_button.setIcon(get_icon('pause'))
                 else:
                     self.pause_button.setText("恢复")
-                    self.pause_button.setIcon(QIcon("resources/icons/play.png"))
+                    self.pause_button.setIcon(get_icon('play'))
     
     def _show_context_menu(self, position):
         """显示上下文菜单"""

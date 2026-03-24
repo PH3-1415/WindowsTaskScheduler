@@ -6,12 +6,18 @@ PyInstaller spec 文件 - 用于打包 WindowsTaskScheduler
 import sys
 from pathlib import Path
 
+# 获取项目根目录
+project_root = Path(SPECPATH)
+
 # 分析主程序
 a = Analysis(
     ['main.py'],
-    pathex=[],
+    pathex=[str(project_root)],
     binaries=[],
-    datas=[],
+    datas=[
+        # 包含资源文件
+        ('resources', 'resources'),
+    ],
     hiddenimports=[
         # 主要模块
         'app',
@@ -45,6 +51,7 @@ a = Analysis(
         'utils.date_utils',
         'utils.emoji_handler',
         'utils.encoding_helper',
+        'utils.resource_helper',
         # 资源模块
         'resources',
         'tools',

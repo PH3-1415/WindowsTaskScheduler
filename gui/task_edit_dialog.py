@@ -18,6 +18,7 @@ from PySide6.QtGui import QFont, QIcon
 
 from database.models import Task
 from gui.styles.colors import COLORS
+from utils.icon_helper import get_icon
 
 
 class TaskEditDialog(QDialog):
@@ -76,13 +77,13 @@ class TaskEditDialog(QDialog):
         
         # 确定按钮
         self.ok_button = QPushButton("确定")
-        self.ok_button.setIcon(QIcon("resources/icons/ok.png"))
+        self.ok_button.setIcon(get_icon('ok'))
         self.ok_button.clicked.connect(self.accept)
         self.ok_button.setDefault(True)
         
         # 取消按钮
         self.cancel_button = QPushButton("取消")
-        self.cancel_button.setIcon(QIcon("resources/icons/cancel.png"))
+        self.cancel_button.setIcon(get_icon('cancel'))
         self.cancel_button.clicked.connect(self.reject)
         
         # 添加到按钮布局

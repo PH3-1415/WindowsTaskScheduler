@@ -57,13 +57,11 @@ class TaskSchedulerApp(QMainWindow):
     def _setup_icon(self):
         """设置应用图标"""
         try:
-            # 尝试加载图标文件
-            icon_path = "resources/icons/app.ico"
-            icon = QIcon(icon_path)
+            from utils.icon_helper import get_app_icon
+            icon = get_app_icon()
             self.setWindowIcon(icon)
             QApplication.setWindowIcon(icon)
-        except:
-            # 如果图标文件不存在，使用默认图标
+        except Exception:
             pass
     
     def _init_ui(self):
@@ -240,10 +238,11 @@ class TaskSchedulerApp(QMainWindow):
             
             # 显示托盘提示
             if hasattr(self.main_window, 'system_tray'):
+                from utils.icon_helper import get_tray_icon
                 self.main_window.system_tray.showMessage(
                     "程序已最小化",
                     "Windows定时任务管理器已最小化到系统托盘。",
-                    QIcon("resources/icons/tray_normal.ico"),
+                    get_tray_icon(),
                     3000
                 )
         else:

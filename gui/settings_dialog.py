@@ -19,6 +19,7 @@ from PySide6.QtGui import QFont, QIcon
 from config import ConfigManager
 from utils.auto_start import AutoStartManager
 from gui.styles.colors import COLORS
+from utils.icon_helper import get_icon
 
 
 class SettingsDialog(QDialog):
@@ -80,22 +81,22 @@ class SettingsDialog(QDialog):
         
         # 保存按钮
         self.save_button = QPushButton("保存")
-        self.save_button.setIcon(QIcon("resources/icons/save.png"))
+        self.save_button.setIcon(get_icon('save'))
         self.save_button.clicked.connect(self._on_save)
         
         # 应用按钮
         self.apply_button = QPushButton("应用")
-        self.apply_button.setIcon(QIcon("resources/icons/apply.png"))
+        self.apply_button.setIcon(get_icon('apply'))
         self.apply_button.clicked.connect(self._on_apply)
         
         # 取消按钮
         self.cancel_button = QPushButton("取消")
-        self.cancel_button.setIcon(QIcon("resources/icons/cancel.png"))
+        self.cancel_button.setIcon(get_icon('cancel'))
         self.cancel_button.clicked.connect(self.reject)
         
         # 重置按钮
         self.reset_button = QPushButton("重置")
-        self.reset_button.setIcon(QIcon("resources/icons/reset.png"))
+        self.reset_button.setIcon(get_icon('refresh'))
         self.reset_button.clicked.connect(self._on_reset)
         
         # 添加到按钮布局

@@ -22,6 +22,7 @@ from database.models import DefaultScript
 from database.db_manager import DatabaseManager
 from core.default_script import DefaultScriptManager
 from gui.styles.colors import COLORS
+from utils.icon_helper import get_icon
 
 
 class DefaultScriptDialog(QDialog):
@@ -83,30 +84,30 @@ class DefaultScriptDialog(QDialog):
         
         # 运行按钮
         self.run_button = QPushButton("运行脚本")
-        self.run_button.setIcon(QIcon("resources/icons/play.png"))
+        self.run_button.setIcon(get_icon('play'))
         self.run_button.clicked.connect(self._run_script)
         self.run_button.setEnabled(False)
         
         # 保存按钮
         self.save_button = QPushButton("保存")
-        self.save_button.setIcon(QIcon("resources/icons/save.png"))
+        self.save_button.setIcon(get_icon('save'))
         self.save_button.clicked.connect(self._save_script)
         self.save_button.setEnabled(False)
         
         # 新建按钮
         self.new_button = QPushButton("新建")
-        self.new_button.setIcon(QIcon("resources/icons/add.png"))
+        self.new_button.setIcon(get_icon('add'))
         self.new_button.clicked.connect(self._new_script)
         
         # 删除按钮
         self.delete_button = QPushButton("删除")
-        self.delete_button.setIcon(QIcon("resources/icons/delete.png"))
+        self.delete_button.setIcon(get_icon('delete'))
         self.delete_button.clicked.connect(self._delete_script)
         self.delete_button.setEnabled(False)
         
         # 关闭按钮
         self.close_button = QPushButton("关闭")
-        self.close_button.setIcon(QIcon("resources/icons/close.png"))
+        self.close_button.setIcon(get_icon('close'))
         self.close_button.clicked.connect(self.reject)
         
         # 添加到按钮布局

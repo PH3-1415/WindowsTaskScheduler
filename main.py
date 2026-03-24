@@ -8,19 +8,25 @@ import os
 import traceback
 from pathlib import Path
 
-# 处理 PyInstaller 打包后的路径问题
-def get_base_path():
-    """获取基础路径（兼容 PyInstaller 打包）"""
-    if getattr(sys, 'frozen', False):
-        # PyInstaller 打包后
-        return Path(sys._MEIPASS)
-    else:
-        # 开发环境
-        return Path(__file__).parent
 
-# 添加项目根目录到Python路径
-project_root = get_base_path()
-sys.path.insert(0, str(project_root))
+def setup_path():
+    """设置Python路径（兼容 PyInstaller 打包）"""
+    if getattr(sys, 'frozen', False):
+        # PyInstaller 打包后，使用 _MEIPASS
+        base_path = Path(sys._MEIPASS)
+    else:
+        # 开发环境，使用脚本所在目录
+        base_path = Path(__file__).parent.resolve()
+    
+    # 确保项目根目录在 Python 路径中
+    if str(base_path) not in sys.path:
+        sys.path.insert(0, str(base_path))
+    
+    return base_path
+
+
+# 在任何其他导入之前设置路径
+PROJECT_ROOT = setup_path()
 
 from PySide6.QtWidgets import QApplication
 from PySide6.QtCore import Qt
